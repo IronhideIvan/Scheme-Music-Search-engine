@@ -1,2 +1,104 @@
 # Scheme-Music-Search-engine
 A music related search engine written in Racket/Scheme
+
+-Code Authors:
+-Arthur Lisek-Koper
+-Derek Campaniello
+-
+-This submission is being sent by:
+-Arthur Lisek-Koper
+-
+-Files that are being submitted:
+-
+-main.rkt
+-parsing.rkt
+-image-not-found.png
+-screenshot.png
+-readme.txt
+-
+---------------------------
+-
+-How to run the program:
+-
+- 1) Open main.rkt
+- 2) Hit run
+- 3) enter an artist to search and hit "Submit". (Note: Pressing the "Enter/Return" key does nothing.)
+- 4) wait for results to show.
+- 5) double-click the most appropriate result.
+- 6) wait
+- 7) click through each result to view album art, if any is available.
+- -double click on a result to open up youtube on the default browser with your result as a search-query
+- 8) single-click on a result and then hit "suggested results" on the bottom of the window to view recommended alternatives to the selected result
+- 9) wait
+- 10) *see number 7*
+-
+- 11) close the windows and try a new search!
+-
+---------------------------
+-
+-Structure of the code:
+-
+- The overall structure of the code is fairly well separated.
+-main.rkt contains all of the GUI elements while parsing.rkt contains
+-all of the flatfile-parsing and network elements.
+-
+- The gui code constructs various classes of smaller objects which
+-are assembled together through a larger frame class. Each of the smaller classes
+-have a specific role and are generally abstracted from one another. The primary
+-function of the GUI is to create a user-friendly interface for all of the data
+-that is being fed by the code in parsing.rkt.
+-
+- parsing.rkt is where all of the magic happens, so to speak. It is here
+-that xml and htm' information gets pulled from public domain databases and parsed in series
+-of nested lists before it is passed to the gui classes in main.rkt for presentation.
+-
+---------------------------
+-
+-Work that I did:
+-
+- The file that I did the most work in is main.rkt. I constructed most of
+-the GUI framework to use Derek's pulled information from the databases. Derek
+-edited some things in it once we were integrating our code, but those were mostly
+-for compatability purposes.
+-
+-The things that I wrote, which most pertain to the ideas of the class were:
+-
+---in main.rkt--
+-
+-- Data abstraction and object oriented programming
+-
+- Most of the gui elements follow this schema so I will not point
+-out every instance that exists within the code. However, once example includes
+-the relationship between the netimage% class on line 37 and the the results-window%
+-class defined on line 302. results-window% is a class that contains a netimae% within
+-it, but does not have any direct access to its elements. As a result, it must use
+-"send" procedures to netimage% for any alterations of information, with hopes that
+-netimage% contains such methods. Otherwise, results-window% is unable to change
+-netimage% directly.
+-
+--lets and lambdas
+-
+- Also another topic that is used throughout the gui. lets and lambdas were
+-necessary for dealing with the gui, as small locally defined functions were practically
+-required for the specific actions that they required only within the contexts of their
+-definitions. For example, within the on-paint method of netimage% on line 60,
+-a let procedure is used to draw images onto a given canvas. The procedure decides
+-which canvas is requested to draw into and handles the call appropriately.
+-
+--lists
+-
+- lists are used to store all of our data.
+-
+-
+---in parsing.rkt--
+-
+--foldr
+-
+- Although it is a minor procedure, and only one of them exist beginning
+-in line 112, it was vital to our efforts in parsing parts of the xml flatfiles.
+-This foldr finds an '&' symbol within a list and combines it with the strings
+-of the next and previous cars of the list, turning three cons cells into one.
+-This was necessary because the xml files would separate strings containing an
+-'&' symbol into 3 separate parts, so we had to paste them back together.
+-
+------END-OF-README-----
